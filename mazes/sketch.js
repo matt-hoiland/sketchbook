@@ -9,11 +9,16 @@ var cells = [];
 var cur = null;
 var stack = [];
 
+var visited_color;    // purple
+var exploring_color;  // blue
+var dead_end_color;   // red
+var path_color;       // green
+
 var generated = false;
 
 function setup() {
     createCanvas(w, h);
-    // frameRate(10);
+    // frameRate(5);
     for (var i = 0; i < rows; i++) {
         for (var j = 0; j < cols; j++) {
             cells.push(new Cell(i, j));
@@ -21,9 +26,24 @@ function setup() {
     }
     cur = cells[0];
     cur.visited = true;
-    // while(!generated) {
-    //
-    // }
+    while(!generated) {
+        if (cur) {
+            var n  = cur.getRandomNeighbor();
+            if (n) {
+                stack.push(cur);
+                cur = n
+                cur.visited = true;
+            } else if (stack.length > 0) {
+                cur = stack.pop();
+            } else {
+                generated = true;
+            }
+        }
+    }
+    visited_color = color(0);    // purple
+    exploring_color = color(140);  // blue
+    dead_end_color = color(50);   // red
+    path_color = color(200);       // green
 }
 
 function getIndex(i, j) {
@@ -78,6 +98,18 @@ function draw() {
     }
 }
 
+function keyPressed(key) {
+    if (key.key === "ArrowUp") {
+        console.log("up");
+    } else if (key.key === "ArrowDown") {
+        console.log("down");
+    } else if (key.key === "ArrowLeft") {
+        console.log("left");
+    } else if (key.key === "ArrowRight") {
+        console.log("right");
+    }
+}
+
 function Cell(i, j) {
     this.i = i;
     this.j = j;
@@ -90,13 +122,13 @@ function Cell(i, j) {
 
     this.show = function() {
         if (this.path) {
-            fill(0,150,0);
+            fill(path_color);
         } else if (this.dead_end) {
-            fill(150,0,0);
+            fill(dead_end_color);
         } else if (this.exploring){
-            fill(0,0,150);
+            fill(exploring_color);
         } else if (this.visited) {
-            fill(150,0,150);
+            fill(visited_color);
         } else {
             noFill();
         }
@@ -162,14 +194,15 @@ function Cell(i, j) {
 
     this.getValidNeighbor = function() {
         this.exploring = true;
-        if (!this.walls[0] && !this.marks[0]) {
-            this.marks[0] = true;
-            var n = cells[getIndex(this.i - 1, this.j)];
-            if (n && !n.exploring) return n;
-        }
+
         if (!this.walls[1] && !this.marks[1]) {
             this.marks[1] = true;
             var n = cells[getIndex(this.i, this.j + 1)];
+            if (n && !n.exploring) return n;
+        }
+        if (!this.walls[3] && !this.marks[3]) {
+            this.marks[3] = true;
+            var n = cells[getIndex(this.i, this.j - 1)];
             if (n && !n.exploring) return n;
         }
         if (!this.walls[2] && !this.marks[2]) {
@@ -177,9 +210,35 @@ function Cell(i, j) {
             var n = cells[getIndex(this.i + 1, this.j)];
             if (n && !n.exploring) return n;
         }
-        if (!this.walls[3] && !this.marks[3]) {
+        if (!this.walls[0] && !this.marks[0]) {
+            this.marks[0] = true;
+            var n = cells[getIndex(this.i - 1, this.j)];
+            if (n && !n.exploring) return n;
+        }
+        return undefined;
+    }
+
+    this.getNeighbor = function(dir) {
+        this.exploring = true;
+
+        if (dir === "ArrowRight" && !this.walls[1] && !this.marks[1]) {
+            this.marks[1] = true;
+            var n = cells[getIndex(this.i, this.j + 1)];
+            if (n && !n.exploring) return n;
+        } else
+        if (dir === "ArrowLeft" && !this.walls[3] && !this.marks[3]) {
             this.marks[3] = true;
             var n = cells[getIndex(this.i, this.j - 1)];
+            if (n && !n.exploring) return n;
+        } else
+        if (!this.walls[2] && !this.marks[2]) {
+            this.marks[2] = true;
+            var n = cells[getIndex(this.i + 1, this.j)];
+            if (n && !n.exploring) return n;
+        } else
+        if (!this.walls[0] && !this.marks[0]) {
+            this.marks[0] = true;
+            var n = cells[getIndex(this.i - 1, this.j)];
             if (n && !n.exploring) return n;
         }
         return undefined;
