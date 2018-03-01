@@ -1,5 +1,5 @@
-var sketch = new p5(function (p) => {
-  p.setup = function() {
+var sketch = new p5((p) => {
+  p.setup = () => {
     console.log('Hello world!')
   }
 })
