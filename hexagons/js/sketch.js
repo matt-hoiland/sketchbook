@@ -4,7 +4,7 @@ var s;
 var cnv;
 
 function setup() {
-  cnv = createCanvas(600,600)
+  cnv = createCanvas(windowWidth,windowHeight)
   colorMode(HSB, 100)
   // frameRate(5)
 
