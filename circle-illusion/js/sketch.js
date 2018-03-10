@@ -1,4 +1,4 @@
-
+256
 class Circle {
   constructor(angle, start) {
     this.angle = angle
@@ -7,7 +7,7 @@ class Circle {
     // Shared constants
     this.magnitude = 150
     this.size = 30
-    this.rate = TWO_PI / 120
+    this.rate = TWO_PI / 180
   }
 
   draw() {
@@ -28,16 +28,16 @@ class Circle {
   }
 }
 
-let circle_count = 8
+let circle_count = 128
 let circles = Array(circle_count).fill(null)
 
 function setup() {
   createCanvas(400, 400)
+  background(0)
   circles = circles.map((v, i, a) => new Circle(PI * i / circle_count, PI * i / circle_count))
 }
 
 function draw() {
-  background(0)
   for (let circle of circles) {
     circle.draw()
     circle.advance()
