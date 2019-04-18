@@ -3,7 +3,7 @@ let colors = {
   'J': 'blue',
   'L': 'orange',
   'O': 'yellow',
-  'S': 'green'
+  'S': 'green',
   'T': 'purple',
   'Z': 'red'
 }
