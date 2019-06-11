@@ -13,7 +13,7 @@ function initSketch(p) {
   let m0 = p.createVector(0, 0);
 
   p.setup = () => {
-    let cnv = p.createCanvas(512, 512);
+    let cnv = p.createCanvas(CANVAS_SIZE.DEFAULT, CANVAS_SIZE.DEFAULT);
     cnv.mousePressed(selectObj);
     cnv.mouseMoved(moveObj);
     cnv.mouseReleased(releaseObj);
