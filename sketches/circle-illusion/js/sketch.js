@@ -1,45 +1,49 @@
-256
+
 class Circle {
   constructor(angle, start) {
-    this.angle = angle
-    this.position = start // [0 ... TWO_PI]
+    this.angle = angle;
+    this.position = start; // [0 ... TWO_PI]
 
     // Shared constants
-    this.magnitude = 150
-    this.size = 30
-    this.rate = TWO_PI / 180
+    this.magnitude = 150;
+    this.size = 30;
+    this.rate = 2*Math.PI / 180;
   }
 
-  draw() {
-    push()
-    noStroke()
-    fill(color(`hsl(${floor(degrees(this.angle * 2))}, 100%, 50%)`))
-    translate(width/2, height/2)
-    rotate(this.angle)
-    ellipse(0, this.magnitude * sin(this.position), this.size)
-    pop()
+  draw(p) {
+    p.push();
+    p.noStroke();
+    p.fill(p.color(`hsl(${p.floor(p.degrees(this.angle * 2))}, 100%, 50%)`));
+    p.translate(p.width/2, p.height/2);
+    p.rotate(this.angle);
+    p.ellipse(0, this.magnitude * p.sin(this.position), this.size);
+    p.pop();
   }
 
   advance() {
-    this.position -= this.rate
+    this.position -= this.rate;
     if (this.position < 0) {
-      this.position += TWO_PI
+      this.position += 2*Math.PI;
     }
   }
 }
 
-let circle_count = 128
-let circles = Array(circle_count).fill(null)
+function initSketch(p) {
 
-function setup() {
-  createCanvas(400, 400)
-  background(0)
-  circles = circles.map((v, i, a) => new Circle(PI * i / circle_count, PI * i / circle_count))
-}
+  let circle_count = 12;
+  let circles = Array(circle_count).fill(null);
 
-function draw() {
-  for (let circle of circles) {
-    circle.draw()
-    circle.advance()
+  p.setup = function() {
+    p.createCanvas(CANVAS_SIZE.DEFAULT, CANVAS_SIZE.DEFAULT);
+    p.background(0);
+    circles = circles.map((v, i, a) => new Circle(Math.PI * i / circle_count, Math.PI * i / circle_count));
+  }
+
+  p.draw = function() {
+    p.background(0);
+    for (let circle of circles) {
+      circle.draw(p);
+      circle.advance();
+    }
   }
 }
