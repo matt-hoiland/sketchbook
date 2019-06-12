@@ -5,8 +5,8 @@ class Particle {
     this.theta = theta;
     this.speed = speed;
     this.color = color;
-    this.dx = this.speed * cos(this.theta);
-    this.dy = this.speed * sin(this.theta);
+    this.dx = this.speed * Math.cos(this.theta);
+    this.dy = this.speed * Math.sin(this.theta);
   }
 
   advance() {
@@ -23,12 +23,12 @@ class Particle {
     }
   }
 
-  draw() {
-    push();
-    translate(this.x, this.y);
-    noStroke();
-    fill(color(this.color));
-    ellipse(0, 0, 5, 5);
-    pop();
+  draw(p) {
+    p.push();
+    p.translate(this.x, this.y);
+    p.noStroke();
+    p.fill(p.color(this.color));
+    p.ellipse(0, 0, 5, 5);
+    p.pop();
   }
 }

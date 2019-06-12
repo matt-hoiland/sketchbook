@@ -1,30 +1,20 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <script language="javascript" type="text/javascript" src="/lib/p5.js"></script>
+  <script type="text/javascript" src="/lib/p5.js"></script>
   <!-- uncomment lines below to include extra p5 libraries -->
-  <script language="javascript" src="/lib/p5.dom.js"></script>
-  <!--<script language="javascript" src="/lib/p5.sound.js"></script>-->
-  <script language="javascript" type="text/javascript" src="js/sketch.js"></script>
-  <!-- this line removes any default padding and style. you might only need one of these values set. -->
-  <style>
-    html, body {
-      height: 100%;
-    }
+  <script src="/lib/p5.dom.js"></script>
+  <!--<script src="/lib/p5.sound.js"></script>-->
+  <script type="text/javascript" src="js/sketch.js"></script>
 
-    body {
-      margin: 0;
-      display: flex;
-
-      /* This centers our sketch horizontally. */
-      justify-content: center;
-
-      /* This centers our sketch vertically. */
-      align-items: center;
-    }
-  </style>
+  <!-- Sketch Standards -->
+  <script type="text/javascript" src="/standards/dimensions.js"></script>
+  <link rel="stylesheet" href="/standards/centercanvas.css" />
 </head>
 
 <body>
+  <script type="text/javascript">
+    var pInst = new p5(initSketch);
+  </script>
 </body>
 </html>

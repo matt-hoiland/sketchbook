@@ -1,11 +1,11 @@
-var sketch = function(p) {
-  var canvas;
-  var boxes = [];
-  var angle;
-  var amp;
-  var lambda;
-  var rate;
-  var cangle;
+function initSketch(p) {
+  let canvas;
+  let boxes = [];
+  let angle;
+  let amp;
+  let lambda;
+  let rate;
+  let cangle;
 
   p.amp = function(a) { if (a) amp = a; return amp; }
   p.angle = function(a) { if (a) angle = a; return angle; }
@@ -13,15 +13,15 @@ var sketch = function(p) {
   p.rate = function(r) { if (r) rate = r; return rate; }
 
   p.setup = function() {
-    canvas = p.createCanvas(1200,600);
+    canvas = p.createCanvas(CANVAS_SIZE.DEFAULT,CANVAS_SIZE.DEFAULT);
     cangle = 0;
     angle = 0;
     amp = 200;
     lambda = p.PI * 0.5;
     rate = -4;
     boxes = [];
-    for (var i = 0; i < 80; i++) {
-      var n = amp * p.sin(angle + i * lambda/40);
+    for (let i = 0; i < 40; i++) {
+      let n = amp * p.sin(angle + i * lambda/40);
       boxes.push(n + p.height/2);
     }
   }
@@ -31,15 +31,13 @@ var sketch = function(p) {
     p.fill(0x88);
     p.stroke(0xff);
     p.colorMode(p.HSB);
-    var wid = p.width/boxes.length;
+    let wid = p.width/boxes.length;
     boxes.forEach((v, i, a) => {
       p.fill((p.map(v, p.height/2-amp, p.height/2+amp, 0, 360) + cangle) % 360, 100, 100);
       cangle += p.radians(rate * -1);
-      p.rect(i * wid, v, wid, 50);
+      p.rect(i * wid, v, wid, p.height);
       a[i] = amp * p.sin(angle + i * lambda/40) + p.height/2;
     });
     angle += p.radians(rate);
   }
-};
-
-var skt = new p5(sketch, 'game_box');
+}

@@ -1,0 +1,5 @@
+const CANVAS_SIZE = {
+  DEFAULT: 512,
+  DEFAULT_H: 512,
+  DEFATUL_W: 512,
+}

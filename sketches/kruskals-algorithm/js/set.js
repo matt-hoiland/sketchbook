@@ -2,100 +2,100 @@ class Set {
   constructor(data) {
     this.Node = class {
       constructor(datum) {
-        this.d = datum
-        this.l = null
-        this.r = null
+        this.d = datum;
+        this.l = null;
+        this.r = null;
       }
     }
-    this.root = null
+    this.root = null;
     if (data) {
-      this.insert(data)
+      this.insert(data);
     }
   }
 
   insert(t) {
-    this.root = this._insert(t, this.root)
+    this.root = this._insert(t, this.root);
   }
 
   _insert(t, groot) {
     if (groot === null) {
-      return new this.Node(t)
+      return new this.Node(t);
     }
     if (t.compareTo(groot.d) < 0) {
-      groot.l = this._insert(t, groot.l)
+      groot.l = this._insert(t, groot.l);
     } else {
-      groot.r = this._insert(t, groot.r)
+      groot.r = this._insert(t, groot.r);
     }
-    return groot
+    return groot;
   }
 
   has(t) {
-    return this._has(t, this.root)
+    return this._has(t, this.root);
   }
 
   _has(t, groot) {
     if (groot === null) {
-      return false
+      return false;
     }
     if (t === groot.d) {
-      return true
+      return true;
     }
     if (t.compareTo(groot.d) < 0) {
-      return this._has(t, groot.l)
+      return this._has(t, groot.l);
     } else {
-      return this._has(t, groot.r)
+      return this._has(t, groot.r);
     }
   }
 
   merge(that) {
-    this._merge(that.root)
-    that.root = null
+    this._merge(that.root);
+    that.root = null;
   }
 
   _merge(groot) {
     if (groot === null) {
-      return
+      return;
     }
-    this._merge(groot.l)
-    this._merge(groot.r)
-    this.insert(groot.d)
+    this._merge(groot.l);
+    this._merge(groot.r);
+    this.insert(groot.d);
   }
 }
 
 
 class DisjointSet extends Array {
   constructor(data) {
-    super()
+    super();
     if (data) {
       for (let datum of data) {
-        this.push(new Set(datum))
+        this.push(new Set(datum));
       }
     }
   }
 
   get num_sets() {
-    return this.length
+    return this.length;
   }
 
   find(a) {
     for (let s of this) {
       if (s.has(a)) {
-        return s
+        return s;
       }
     }
-    return null
+    return null;
   }
 
   areDisjoint(a, b) {
-    return this.find(a) !== this.find(b)
+    return this.find(a) !== this.find(b);
   }
 
   union(a, b) {
-    let sa = this.find(a)
-    let sb = this.find(b)
-    sa.merge(sb)
-    let ib = this.indexOf(sb)
-    this[ib] = this[this.length - 1]
-    this.pop()
+    let sa = this.find(a);
+    let sb = this.find(b);
+    sa.merge(sb);
+    let ib = this.indexOf(sb);
+    this[ib] = this[this.length - 1];
+    this.pop();
   }
 }

@@ -26,6 +26,13 @@ Major topic branch. All work to build an app to host the sketches lives here.
 
 My sketches are very varied. I want them to conform to a consistent style with standard dimensions, colors, and themes.
 
+#### 2019-06-10 and 2019-06-11
+
+- [x] Refactor all sketches to instance mode
+- [x] Resize all canvases to the default 512x512.
+- [x] Replace all `var`s with `let`s (except when binding to the global object is preferred)
+- [x] Terminate all expressions with semicolons
+
 ### `utilities`
 
 Major topic branch. Design a CLI to manage the sketches with CRUD operations.
