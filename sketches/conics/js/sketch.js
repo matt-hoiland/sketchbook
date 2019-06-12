@@ -99,7 +99,7 @@ function initSketch(p) {
     let d = p5.Vector.sub(v1, v0);
     let num_points = 250;
 
-    for (var i = - num_points * 2 / 5; i < num_points; i += 1) {
+    for (let i = - num_points * 2 / 5; i < num_points; i += 1) {
       let n = p5.Vector.add(v0, p5.Vector.mult(d, i / (num_points / 5)));
 
       let u = d.copy();
