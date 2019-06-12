@@ -22,6 +22,15 @@ Main code branch. All other branches merge from it when updating. No topic branc
 
 Major topic branch. All work to build an app to host the sketches lives here.
 
+#### 2019-06-10
+
+- [x] Prove concept: dynamic creation and deletion of sketches
+
+#### 2019-06-11
+
+- [x] Refactor workspace to enable multiple projects
+- [x] Generate conversion project
+
 ### `standardize`
 
 My sketches are very varied. I want them to conform to a consistent style with standard dimensions, colors, and themes.
