@@ -1,7 +1,7 @@
 import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import * as p5 from 'p5';
 
-import { Entropy } from '../sketches/entropy';
+import { Galton } from '../sketches/galton';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.pInst = new p5(
-      Entropy.initSketch,
+      Galton.initSketch,
       this.node.nativeElement
     );
   }
