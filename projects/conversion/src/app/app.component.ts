@@ -1,7 +1,7 @@
 import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import * as p5 from 'p5';
 
-import { Mazes } from '../sketches/mazes';
+import { BetterEntropy } from '../sketches/entropy2';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.pInst = new p5(
-      Mazes.initSketch,
+      BetterEntropy.initSketch,
       this.node.nativeElement
     );
   }
