@@ -7,9 +7,9 @@ export namespace QTree {
 
   export function initSketch(p: p5): void {
     let [ w, h ] = CANVAS_SIZE.DEFAULTS;
-    let qtree = new QuadTree(new AxisAlignedBoundingBox(new Point(w/2, h/2), w/2, h/2));
+    let qtree = new QuadTree(new AxisAlignedBoundingBox(new Point(0, 0), w/2, h/2));
     let points: Point[] = [];
-    let range = new AxisAlignedBoundingBox(new Point(rand(0, w), rand(0, h)), rand(50, 100), rand(50, 100));
+    let range = new AxisAlignedBoundingBox(new Point(rand(-w/2, w/2), rand(-h/2, h/2)), rand(50, 100), rand(50, 100));
 
 
     p.setup = function() {
@@ -18,8 +18,8 @@ export namespace QTree {
       let num_points = 1000;
       for (let i = 0; i < num_points; i++) {
         let point = new Point(
-          p.floor(p.randomGaussian(w/2, w/6)),
-          p.floor(p.randomGaussian(h/2, h/6))
+          p.floor(p.randomGaussian(0, w/6)),
+          p.floor(p.randomGaussian(0, h/6))
         );
         points.push(point);
         qtree.insert(point);
@@ -30,36 +30,41 @@ export namespace QTree {
     p.draw = function() {
       let boxes = qtree.boundaries();
 
-      if (p.mouseIsPressed) {
-        range.center.x = p.mouseX;
-        range.center.y = p.mouseY;
+      p.push();
+      {
+        p.translate(w/2, h/2);
+        if (p.mouseIsPressed) {
+          range.center.x = p.mouseX - w/2;
+          range.center.y = p.mouseY - h/2;
+        }
+
+        let locus = qtree.query(range);
+
+        p.background(0);
+        p.stroke(0xff);
+        p.noFill();
+        p.rectMode(p.RADIUS);
+
+        p.strokeWeight(1);
+        for (let box of boxes) {
+          p.rect(box.center.x, box.center.y, box.halfWidth, box.halfHeight);
+        }
+
+        p.strokeWeight(3);
+        for (let point of points) {
+          p.point(point.x, point.y);
+        }
+
+        p.stroke(p.color('#0f0'));
+        p.strokeWeight(3);
+        p.rect(range.center.x, range.center.y, range.halfWidth, range.halfHeight);
+
+        p.strokeWeight(6);
+        for (let point of locus) {
+          p.point(point.x, point.y);
+        }
       }
-
-      let locus = qtree.queryRange(range);
-
-      p.background(0);
-      p.stroke(0xff);
-      p.noFill();
-      p.rectMode(p.RADIUS);
-
-      p.strokeWeight(1);
-      for (let box of boxes) {
-        p.rect(box.center.x, box.center.y, box.halfWidth, box.halfHeight);
-      }
-
-      p.strokeWeight(3);
-      for (let point of points) {
-        p.point(point.x, point.y);
-      }
-
-      p.stroke(p.color('#0f0'));
-      p.strokeWeight(3);
-      p.rect(range.center.x, range.center.y, range.halfWidth, range.halfHeight);
-
-      p.strokeWeight(6);
-      for (let point of locus) {
-        p.point(point.x, point.y);
-      }
+      p.pop();
     }
   }
 }

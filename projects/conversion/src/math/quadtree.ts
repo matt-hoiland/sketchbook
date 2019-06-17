@@ -30,14 +30,14 @@ export class AxisAlignedBoundingBox {
   }
 }
 
-export class QuadTree {
+export class QuadTree<T extends Point> {
   readonly CAPACITY: number;
 
-  points: Point[] = [];
-  nw: QuadTree;
-  ne: QuadTree;
-  se: QuadTree;
-  sw: QuadTree;
+  points: T[] = [];
+  nw: QuadTree<T>;
+  ne: QuadTree<T>;
+  se: QuadTree<T>;
+  sw: QuadTree<T>;
 
   constructor(
     public boundary: AxisAlignedBoundingBox,
@@ -50,10 +50,10 @@ export class QuadTree {
   /**
    * insert - Adds a point to the QuadTree
    *
-   * @param {Point} point - The point to be added
+   * @param {T} point - The point to be added
    * @return {boolean} Whether the point was added to the QuadTree
    */
-  insert(point: Point): boolean {
+  insert(point: T): boolean {
     if (!this.boundary.contains(point)) {
       return false;
     }
@@ -77,12 +77,12 @@ export class QuadTree {
 
 
   /**
-   * queryRange - Locates all points within the given range
+   * query - Locates all points within the given range
    *
    * @param {AxisAlignedBoundingBox} range - The range to be searched
-   * @return {Point[]} The set of points within the range
+   * @return {T[]} The set of points within the range
    */
-  queryRange(range: AxisAlignedBoundingBox, points?: Point[]): Point[] {
+  query(range: AxisAlignedBoundingBox, points?: T[]): T[] {
     if (!points) {
       points = [];
     }
@@ -101,10 +101,10 @@ export class QuadTree {
       return points;
     }
 
-    this.nw.queryRange(range, points);
-    this.ne.queryRange(range, points);
-    this.se.queryRange(range, points);
-    this.sw.queryRange(range, points);
+    this.nw.query(range, points);
+    this.ne.query(range, points);
+    this.se.query(range, points);
+    this.sw.query(range, points);
 
     return points;
   }
