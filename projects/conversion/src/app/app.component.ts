@@ -1,7 +1,7 @@
 import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import * as p5 from 'p5';
 
-import { BetterEntropy } from '../sketches/entropy2';
+import { Particles } from '../sketches/particles';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.pInst = new p5(
-      BetterEntropy.initSketch,
+      Particles.initSketch,
       this.node.nativeElement
     );
   }
