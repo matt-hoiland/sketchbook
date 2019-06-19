@@ -1,7 +1,7 @@
 import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import * as p5 from 'p5';
 
-import { Particles } from '../sketches/particles';
+import { Planets } from '../sketches/planets';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.pInst = new p5(
-      Particles.initSketch,
+      Planets.initSketch,
       this.node.nativeElement
     );
   }
