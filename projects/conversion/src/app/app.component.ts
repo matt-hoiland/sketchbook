@@ -1,7 +1,7 @@
 import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import * as p5 from 'p5';
 
-import { Rainbows } from '../sketches/rainbows';
+import { SelfOrganization } from '../sketches/self-organization';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.pInst = new p5(
-      Rainbows.initSketch,
+      SelfOrganization.initSketch,
       this.node.nativeElement
     );
   }
